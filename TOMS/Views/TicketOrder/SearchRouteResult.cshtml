@@ -1,0 +1,60 @@
+﻿@model List<SearchRouteResultViewModel>
+<h1>Search Routes  Result List Information</h1>
+@if (TempData["info"] != null)
+{
+    <div class="alert alert-info">@TempData["info"]</div>
+}
+<div>
+    <div class="form-control">
+        <label>Passenger  Type:</label>
+        <input type="text" value="@Model.FirstOrDefault().PassengerType" id="txtPassengerType" readonly/>
+    </div>
+    <div class="form-control">
+        <label>DepaturedDate:</label>
+        <input type="text" value="@Model.FirstOrDefault().DepaturedDate" id="dtpDepaturedDate" readonly/>
+    </div>
+</div>
+<table class="table table-striped-columns" id="tableRoute">
+    <thead>
+        <tr>
+            <th scope="col">Sr.No</th>
+            <th scope="col">Bus Line Type</th>
+            <th scope="col">Number Of Seats</th>
+            <th scope="col">Bus Line Name</th>
+            <th scope="col">Form City</th>
+            <th scope="col">To City </th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">When </th>
+            <th scope="col">Remark</th>
+           <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int index = 1;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@index</td>
+                <td>@item.Type</td>
+                <td>@item.NumberOfSeat</td>
+                <td>@item.Owner</td>
+                <td>@item.FormCityName</td>
+                <td>@item.ToCityName</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.When</td>
+                <td>@item.Remark</td>
+                    <td>
+                    <a class="btn btn-success" href="/TicketOrder/SelectRouteByPassenger?routeId=@item.RouteId&passengerType=@Model.FirstOrDefault().PassengerType&depaturedDate=@Model.FirstOrDefault().DepaturedDate"><i class="fa-solid fa-angles-right"></i></a>
+                </td>
+            </tr>
+            index++;
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $("#tableRoute").DataTable();
+    });
+</script>
